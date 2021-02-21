@@ -9,8 +9,6 @@ using Random = UnityEngine.Random; //do random number pick
 public class CardPick : MonoBehaviour
 {
     //For UI
-    public GameObject PlayerStayText;
-    public GameObject OpponentStayText;
     public GameObject[] PlayerHealth;
     public GameObject[] OpponentHealth;
     public GameObject ButtonAction;
@@ -18,8 +16,10 @@ public class CardPick : MonoBehaviour
     public Text WhoWinText;
 
     //Message
-    public GameObject Message;
-    public Text Message_Text;
+    public GameObject PlayerFinish;
+    public GameObject DecisionCheck;
+    //public GameObject Message;
+    //public Text Message_Text;
 
     //For card place
     public GameObject[] Card;
@@ -29,7 +29,7 @@ public class CardPick : MonoBehaviour
     GameObject Opponent_PlaceCard;
 
     //situation booling
-    bool Hit = false,
+    bool Finish = false,
         Winning = false,
         didPlayerWin = false,
         didPlayerLose = false;
@@ -37,12 +37,11 @@ public class CardPick : MonoBehaviour
     //Player
     int PlayerHP = 3,
         hold = 0;
-    int[] PlayerHode;
+    int[] PlayerHode = new int[3];
     //Opponent
-    int OpponentHP = 3;
-    int[] OpponentHode;
-
-    int PlayerNum, OpponentNum;
+    int OpponentHP = 3,
+        O_hold = 0;
+    int[] OpponentHode = new int[3];
 
     UserProfile userprofile;
     GlobalControl global;
@@ -50,74 +49,91 @@ public class CardPick : MonoBehaviour
     void Start()
     {
         //set text to 0
-        didPlayerWin = false;
-        didPlayerLose = false;
         global = (GlobalControl)FindObjectOfType(typeof(GlobalControl));
         //AI = (AI_Player)FindObjectOfType(typeof(AI_Player));
     }
 
     private void Update()
     {
-        if (Hit)
+        if (hold == 3)
+            DecisionCheck.gameObject.SetActive(true);
+        else
+            DecisionCheck.gameObject.SetActive(false);
+
+        /*
+        //Debug.Log(hold);
+        if (Finish && O_hold != 3)
         {
             OppontmentPlay();
-            Message.gameObject.SetActive(false);
+            //Message.gameObject.SetActive(false);
         }
 
-        Hit = false;
+        Finish = false;
         
         HealthLose(PlayerHP, OpponentHP);
 
         if (Winning == true && ButtonAction.activeSelf)
             ReviveHealth();
+        */
     }
 
     public void ButFinish()
     {
-        Hit = true;
-        //PlayerStay = true;
-        PlayerStayText.gameObject.SetActive(true);
-        //if (PlayerStay == true && OpponentStay == true)
-            Result();
+        /*
+        Finish = true;
+        PlayerFinish.gameObject.SetActive(true);
+        Result();
+        */
 
-        
     }
     public void ButClear()
     {
-        //Reset();
+        hold = 0;
+        clearCard();
+        for (int i = 0; i < PlayerHode.Length; i++)
+        {
+            PlayerHode[i] = 0;
+        }
     }
 
     //do random number
-    public int RandomNumber()
-    {
-        int pick = Random.Range(1, 3);
-        return pick;
-    }
 
+
+    /// //////////////////////////////////////////////////////
+    //battle button
     public void ButSword()
     {
-        Hit = true;
-
-        if(hold!=2)
+        if(hold!=3)
         {
-            PlayerNum = 1;
-            PlayerShow(PlayerNum);
             PlayerHode[hold] = 1;
+            hold++;
+            PlayerShow(1);
         }
 
-        hold++;
     }
-
-    //Card and place them
-    private void PlayerShow(int num)
+    public void ButMagic()
     {
-        Player_PlaceCard = Instantiate(Card[num-1], new Vector2(0, 0), Quaternion.identity);
-        Player_PlaceCard.transform.SetParent(PlayerArea.transform, false);
+        if (hold != 3)
+        {
+            PlayerHode[hold] = 3;
+            hold++;
+            PlayerShow(3);
+        }
 
-        //Debug.Log(max);
     }
+    public void ButShield()
+    {
+        if (hold != 3)
+        {
+            PlayerHode[hold] = 2;
+            hold++;
+            PlayerShow(2);
+        }
 
-    //clear card on table
+        
+    }
+    //-------------------------------------------------------------------------------------
+    //Clear the card
     private void clearCard()
     {
         var max = GameObject.FindGameObjectsWithTag("Card");
@@ -128,9 +144,19 @@ public class CardPick : MonoBehaviour
         }
 
 
-        Hit = false;
+        Finish = false;
+        PlayerFinish.gameObject.SetActive(false);
     }
 
+//-----------------------------------------------------------------------------------
+    //Show card on the table
+    private void PlayerShow(int num)
+    {
+        Player_PlaceCard = Instantiate(Card[num-1], new Vector2(0, 0), Quaternion.identity);
+        Player_PlaceCard.transform.SetParent(PlayerArea.transform, false);
+
+        //Debug.Log(max);
+    }
     private void OpponentShow(int num)
     {
         Opponent_PlaceCard = Instantiate(Card[num - 1], new Vector2(0, 0), Quaternion.identity);
@@ -170,19 +196,26 @@ public class CardPick : MonoBehaviour
         Winning = false;
     }
 
+    //----------------------------------------------------------------
+    //oppontment term
+    public int RandomNumber()
+    {
+        int pick = Random.Range(1, 3);
+        return pick;
+    }
     private void OppontmentPlay()
     {
         for (int i = 0; i < 3; i++)
         {
-            OpponentNum = RandomNumber();
-            OpponentShow(OpponentNum);
+            OpponentHode[i] = RandomNumber();
+            O_hold++;
+            OpponentShow(OpponentHode[i]);
         }
     }
-
+    //--------------------------------------------------------------------
+    //result
     private void Result()
     {
-        PlayerStayText.gameObject.SetActive(false);
-        OpponentStayText.gameObject.SetActive(false);
 
         //check result
         for(int i=0;i<3;i++)
@@ -218,7 +251,13 @@ public class CardPick : MonoBehaviour
                 global.xp += 4;
             }
         }
-        clearCard();
-
+        StartCoroutine((string)Timer());
     }
+
+    IEnumerable Timer()
+    {
+        yield return new WaitForSeconds(3);
+        clearCard();
+    }
+
 }
