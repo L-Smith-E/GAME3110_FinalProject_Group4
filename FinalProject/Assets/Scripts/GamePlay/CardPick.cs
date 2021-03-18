@@ -61,8 +61,7 @@ public class CardPick : MonoBehaviour
             DecisionCheck.gameObject.SetActive(false);
 
         /*
-        //Debug.Log(hold);
-        if (Finish && O_hold != 3)
+        if (Finish)
         {
             OppontmentPlay();
             //Message.gameObject.SetActive(false);
@@ -79,20 +78,23 @@ public class CardPick : MonoBehaviour
 
     public void ButFinish()
     {
-        /*
+        
         Finish = true;
         PlayerFinish.gameObject.SetActive(true);
         Result();
-        */
+        
 
     }
     public void ButClear()
     {
-        hold = 0;
-        clearCard();
-        for (int i = 0; i < PlayerHode.Length; i++)
+        if(!Finish)
         {
-            PlayerHode[i] = 0;
+            hold = 0;
+            clearCard();
+            for (int i = 0; i < PlayerHode.Length; i++)
+            {
+                PlayerHode[i] = 0;
+            }
         }
     }
 
@@ -103,7 +105,7 @@ public class CardPick : MonoBehaviour
     //battle button
     public void ButSword()
     {
-        if(hold!=3)
+        if(hold!=3 && !Finish)
         {
             PlayerHode[hold] = 1;
             hold++;
@@ -113,7 +115,7 @@ public class CardPick : MonoBehaviour
     }
     public void ButMagic()
     {
-        if (hold != 3)
+        if (hold != 3 && !Finish)
         {
             PlayerHode[hold] = 3;
             hold++;
@@ -123,7 +125,7 @@ public class CardPick : MonoBehaviour
     }
     public void ButShield()
     {
-        if (hold != 3)
+        if (hold != 3 && !Finish)
         {
             PlayerHode[hold] = 2;
             hold++;
