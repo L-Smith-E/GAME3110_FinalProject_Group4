@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using UnityEditor.Experimental.SceneManagement;
 using UnityEngine;
 using UnityEngine.Timeline;
 
@@ -122,7 +122,7 @@ namespace UnityEditor.Timeline
 
                 if (PrefabUtility.IsPartOfPrefabAsset(state.editSequence.director))
                 {
-                    var stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+                    var stage = PrefabStageUtility.GetCurrentPrefabStage();
                     if (stage == null || !stage.IsPartOfPrefabContents(state.editSequence.director.gameObject))
                         return s_PrefabOutOfContextMode;
                 }

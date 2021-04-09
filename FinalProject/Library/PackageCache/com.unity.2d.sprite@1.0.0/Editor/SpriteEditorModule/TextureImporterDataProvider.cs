@@ -71,10 +71,9 @@ namespace UnityEditor.U2D.Sprites
         }
     }
 
-    internal class TextureImporterDataProvider : ISpriteEditorDataProvider, ISpriteNameFileIdDataProvider
+    internal class TextureImporterDataProvider : ISpriteEditorDataProvider
     {
         TextureImporter m_TextureImporter;
-        SpriteNameFileIdPairExt[] m_NameFileIdPairs;
         List<SpriteDataExt> m_SpritesMultiple;
         SpriteDataExt m_SpriteSingle;
         SpriteImportMode m_SpriteImportMode = SpriteImportMode.None;
@@ -135,60 +134,30 @@ namespace UnityEditor.U2D.Sprites
             }
             else if (spriteImportMode == SpriteImportMode.Multiple)
             {
-                var newSpritesById = new Dictionary<GUID, SpriteRect>();
-                var newSpritesByName = new Dictionary<string, SpriteRect>();
+                Dictionary<GUID, SpriteRect> newSprites = new Dictionary<GUID, SpriteRect>();
                 foreach (var newSprite in spriteRects)
                 {
-                    newSpritesById.Add(newSprite.spriteID, newSprite);
-                    newSpritesByName.Add(newSprite.name, newSprite);
+                    newSprites.Add(newSprite.spriteID, newSprite);
                 }
 
-                for (var i = m_SpritesMultiple.Count - 1; i >= 0; --i)
+                for (int i = m_SpritesMultiple.Count - 1; i >= 0; --i)
                 {
                     var spriteID = m_SpritesMultiple[i].spriteID;
-                    var spriteName = m_SpritesMultiple[i].name;
-                    SpriteRect spriteRect = null;
-                    if (newSpritesById.TryGetValue(spriteID, out spriteRect))
+                    if (newSprites.TryGetValue(spriteID, out SpriteRect smd))
                     {
-                        m_SpritesMultiple[i].CopyFromSpriteRect(spriteRect);
-                        newSpritesById.Remove(spriteRect.spriteID);
-                        newSpritesByName.Remove(spriteRect.name);
-                    }
-                    else if (newSpritesByName.TryGetValue(spriteName, out spriteRect))
-                    {
-                        var oldSpriteId = m_SpritesMultiple[i].spriteID;
-                        var oldInternalId = m_SpritesMultiple[i].internalID;
-                        m_SpritesMultiple[i].CopyFromSpriteRect(spriteRect);
-
-                        // Keeping old IDs to maintain the links to serialized Sprites
-                        m_SpritesMultiple[i].spriteID = oldSpriteId;
-                        m_SpritesMultiple[i].internalID = oldInternalId;
-
-                        newSpritesByName.Remove(spriteRect.name);
-                        newSpritesById.Remove(spriteRect.spriteID);
+                        m_SpritesMultiple[i].CopyFromSpriteRect(smd);
+                        newSprites.Remove(spriteID);
                     }
                     else
+                    {
                         m_SpritesMultiple.RemoveAt(i);
+                    }
                 }
-
-                foreach (var newSprite in newSpritesById.Values)
+                // Add new ones
+                foreach (var newSprite in newSprites.Values)
+                {
                     m_SpritesMultiple.Add(new SpriteDataExt(newSprite));
-            }
-        }
-
-        IEnumerable<SpriteNameFileIdPair> ISpriteNameFileIdDataProvider.GetNameFileIdPairs()
-        {
-            return m_NameFileIdPairs.ToArray<SpriteNameFileIdPair>();
-        }
-
-        void ISpriteNameFileIdDataProvider.SetNameFileIdPairs(IEnumerable<SpriteNameFileIdPair> pairs)
-        {
-            m_NameFileIdPairs = new SpriteNameFileIdPairExt[pairs.Count()];
-            var count = 0;
-            foreach (var pair in pairs)
-            {
-                m_NameFileIdPairs[count] = new SpriteNameFileIdPairExt(pair.name, pair.fileId);
-                count++;
+                }
             }
         }
 
@@ -259,19 +228,6 @@ namespace UnityEditor.U2D.Sprites
                 }
             }
 
-            var noOfPairs = m_NameFileIdPairs.Length;
-            if (noOfPairs > 0)
-            {
-                var pairsSo = so.FindProperty("m_SpriteSheet.m_NameFileIdTable");
-                pairsSo.arraySize = noOfPairs;
-                var element = pairsSo.GetArrayElementAtIndex(0);
-                foreach (var pair in m_NameFileIdPairs)
-                {
-                    pair.Apply(element);
-                    element.Next(false);
-                }
-            }
-
             SpriteSecondaryTextureDataTransfer.Apply(so, m_SecondaryTextureDataTransfer);
             so.ApplyModifiedPropertiesWithoutUndo();
         }
@@ -279,15 +235,14 @@ namespace UnityEditor.U2D.Sprites
         void ISpriteEditorDataProvider.InitSpriteEditorDataProvider()
         {
             var so = GetSerializedObject();
-
-            var spriteSheetSo = so.FindProperty("m_SpriteSheet.m_Sprites");
+            var spriteSheetSO = so.FindProperty("m_SpriteSheet.m_Sprites");
             m_SpritesMultiple = new List<SpriteDataExt>();
             m_SpriteSingle = new SpriteDataExt(so);
 
-            if (spriteSheetSo.arraySize > 0)
+            if (spriteSheetSO.arraySize > 0)
             {
-                var sp = spriteSheetSo.GetArrayElementAtIndex(0);
-                for (int i = 0; i < spriteSheetSo.arraySize; ++i)
+                var sp = spriteSheetSO.GetArrayElementAtIndex(0);
+                for (int i = 0; i < spriteSheetSO.arraySize; ++i)
                 {
                     var data = new SpriteDataExt(sp);
                     m_SpritesMultiple.Add(data);
@@ -295,19 +250,6 @@ namespace UnityEditor.U2D.Sprites
                 }
             }
             m_SecondaryTextureDataTransfer = SpriteSecondaryTextureDataTransfer.Load(so);
-
-            var nameFileIdTableSo = so.FindProperty("m_SpriteSheet.m_NameFileIdTable");
-            var arraySize = nameFileIdTableSo.arraySize;
-            m_NameFileIdPairs = new SpriteNameFileIdPairExt[arraySize];
-            if (m_NameFileIdPairs.Length > 0)
-            {
-                var sp = nameFileIdTableSo.GetArrayElementAtIndex(0);
-                for (var i = 0; i < nameFileIdTableSo.arraySize; ++i)
-                {
-                    m_NameFileIdPairs[i] = new SpriteNameFileIdPairExt(sp);
-                    sp.Next(false);
-                }
-            }
         }
 
         T ISpriteEditorDataProvider.GetDataProvider<T>()
@@ -388,7 +330,7 @@ namespace UnityEditor.U2D.Sprites
             return false;
         }
 
-        public SecondarySpriteTexture[] secondaryTextures
+        public SecondarySpriteTexture[] secdonaryTextures
         {
             get { return m_SecondaryTextureDataTransfer; }
             set { m_SecondaryTextureDataTransfer = value; }

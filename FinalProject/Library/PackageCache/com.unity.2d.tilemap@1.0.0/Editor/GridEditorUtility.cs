@@ -190,9 +190,6 @@ namespace UnityEditor.Tilemaps
 
         public static void DrawGridMarquee(GridLayout gridLayout, BoundsInt area, Color color)
         {
-            if (gridLayout == null)
-                return;
-
             switch (gridLayout.cellLayout)
             {
                 case GridLayout.CellLayout.Hexagon:

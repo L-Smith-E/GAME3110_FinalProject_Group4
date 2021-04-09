@@ -11,8 +11,6 @@ UnityEngine
 U2D
 Experimental
 Animation
-AssetModificationProcessor
-
 Sysroot
 UnityEditor
 LinuxStandalone
@@ -34,11 +32,8 @@ ChannelClientInfo
 ProcessService
 NavMeshBuilder
 NavMeshVisualizationSettings
-PrefabStage
-Experimental
-SceneManagement
-PrefabStageUtility
 CollectImportedDependenciesAttribute
+Experimental
 AssetImporters
 AssetImportContext
 SpriteImportData

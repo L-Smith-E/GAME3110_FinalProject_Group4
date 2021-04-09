@@ -241,15 +241,12 @@ namespace UnityEngine.UI
         [SerializeField]
         private int m_CharacterLimit = 0;
 
-        [FormerlySerializedAs("onSubmit")]
-        [FormerlySerializedAs("m_OnSubmit")]
         [FormerlySerializedAs("m_EndEdit")]
-        [FormerlySerializedAs("m_OnEndEdit")]
         [SerializeField]
-        private SubmitEvent m_OnSubmit = new SubmitEvent();
+        private EndEditEvent m_OnEndEdit = new EndEditEvent();
 
         [SerializeField]
-        private EndEditEvent m_OnDidEndEdit = new EndEditEvent();
+        private SubmitEvent m_OnSubmit = new SubmitEvent();
 
         [FormerlySerializedAs("onValueChange")]
         [FormerlySerializedAs("m_OnValueChange")]
@@ -271,7 +268,6 @@ namespace UnityEngine.UI
         private Color m_SelectionColor = new Color(168f / 255f, 206f / 255f, 255f / 255f, 192f / 255f);
 
         [SerializeField]
-        [Multiline]
         [FormerlySerializedAs("mValue")]
         protected string m_Text = string.Empty;
 
@@ -678,7 +674,7 @@ namespace UnityEngine.UI
         /// ]]>
         ///</code>
         /// </example>
-        public EndEditEvent onEndEdit { get { return m_OnDidEndEdit; } set { SetPropertyUtility.SetClass(ref m_OnDidEndEdit, value); } }
+        public EndEditEvent onEndEdit { get { return m_OnEndEdit; } set { SetPropertyUtility.SetClass(ref m_OnEndEdit, value); } }
 
         /// <summary>
         /// The Unity Event to call when editing has ended

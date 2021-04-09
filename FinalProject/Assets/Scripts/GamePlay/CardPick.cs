@@ -30,6 +30,7 @@ public class CardPick : MonoBehaviour
 
     //situation booling
     bool Finish = false,
+        OtherFinish = false,
         Winning = false,
         didPlayerWin = false,
         didPlayerLose = false;
@@ -61,14 +62,15 @@ public class CardPick : MonoBehaviour
             DecisionCheck.gameObject.SetActive(false);
 
         /*
-        if (Finish)
+        if (Finish && OtherFinish)
         {
             OppontmentPlay();
             //Message.gameObject.SetActive(false);
         }
 
         Finish = false;
-        
+        OtherFinish = false;
+
         HealthLose(PlayerHP, OpponentHP);
 
         if (Winning == true && ButtonAction.activeSelf)
@@ -76,6 +78,7 @@ public class CardPick : MonoBehaviour
         */
     }
 
+    //button Finish
     public void ButFinish()
     {
         
@@ -85,6 +88,8 @@ public class CardPick : MonoBehaviour
         
 
     }
+
+    //button clear
     public void ButClear()
     {
         if(!Finish)
@@ -97,10 +102,6 @@ public class CardPick : MonoBehaviour
             }
         }
     }
-
-    //do random number
-
-
     /// //////////////////////////////////////////////////////
     //battle button
     public void ButSword()
@@ -218,7 +219,6 @@ public class CardPick : MonoBehaviour
     //result
     private void Result()
     {
-
         //check result
         for(int i=0;i<3;i++)
         {
@@ -233,19 +233,23 @@ public class CardPick : MonoBehaviour
         }
 
         //anyone lose health
-        if(OpponentHP == 0 || PlayerHP == 0)
+        if(OpponentHP < 0 || PlayerHP < 0)
         {
             Winning = true;
             WinUI.gameObject.SetActive(true);
             ButtonAction.gameObject.SetActive(false);
 
-            if (PlayerHP == 0 && didPlayerLose == false)
+            if (PlayerHP < 0 && OpponentHP < 0)
+            {
+                WhoWinText.text = "Tie!";
+            }
+            else if (PlayerHP < 0 && didPlayerLose == false)
             {
                 WhoWinText.text = "Opponent Win!";
                 didPlayerLose = true;
                 global.lost += 1;
             }
-            else if (OpponentHP == 0 && didPlayerWin == false)
+            else if (OpponentHP < 0 && didPlayerWin == false)
             {
                 didPlayerWin = true;
                 WhoWinText.text = "Player Win!";

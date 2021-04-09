@@ -20,7 +20,7 @@ m_EmbeddedPackageManifests:
 m_LocalPackages:
   m_LocalFileStatus: []
 m_ProjectPath: D:/Users/jack6/OneDrive/Documents/GitHub/GAME3110_FinalProject_Group4/FinalProject/Packages
-m_EditorVersion: 2021.2.0a8 (05e6d22b19f7)
+m_EditorVersion: 2021.1.2f1 (e5d502d80fbb)
 m_ResolvedPackages:
 - packageId: com.unity.2d.animation@5.0.4
   testable: 0
@@ -96,11 +96,13 @@ m_ResolvedPackages:
     - 5.0.4
     - 6.0.0-pre.1
     - 6.0.0-pre.2
+    - 6.0.1
     compatible:
     - 5.0.3
     - 5.0.4
     - 6.0.0-pre.1
     - 6.0.0-pre.2
+    - 6.0.1
     verified: 5.0.4
   dependencies:
   - name: com.unity.2d.common
@@ -200,10 +202,12 @@ m_ResolvedPackages:
     - 4.0.1
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.0
     compatible:
     - 4.0.1
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.0
     verified: 4.0.1
   dependencies: []
   resolvedDependencies: []
@@ -288,10 +292,12 @@ m_ResolvedPackages:
     - 4.0.2
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.1
     compatible:
     - 4.0.2
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.1
     verified: 4.0.2
   dependencies:
   - name: com.unity.2d.common
@@ -470,11 +476,13 @@ m_ResolvedPackages:
     - 5.1.1
     - 6.0.0-pre.1
     - 6.0.0-pre.2
+    - 6.0.0
     compatible:
     - 5.1.0
     - 5.1.1
     - 6.0.0-pre.1
     - 6.0.0-pre.2
+    - 6.0.0
     verified: 5.1.1
   dependencies:
   - name: com.unity.mathematics
@@ -733,7 +741,6 @@ m_ResolvedPackages:
     - 3.0.4
     - 3.0.5
     compatible:
-    - 3.0.4
     - 3.0.5
     verified: 3.0.5
   dependencies:
@@ -956,7 +963,6 @@ m_ResolvedPackages:
     - 1.1.22
     - 1.1.24
     compatible:
-    - 1.1.22
     - 1.1.24
     verified: 1.1.24
   dependencies:
@@ -1109,7 +1115,6 @@ m_ResolvedPackages:
     - 3.0.3
     - 3.0.4
     compatible:
-    - 3.0.3
     - 3.0.4
     verified: 3.0.4
   dependencies:
@@ -1216,6 +1221,7 @@ m_ResolvedPackages:
     - 1.4.4
     - 1.4.5
     - 1.4.6
+    - 1.4.7
     - 1.5.0-pre.2
     - 1.5.0-preview.1
     - 1.5.0-preview.2
@@ -1230,9 +1236,10 @@ m_ResolvedPackages:
     - 1.6.0-pre.1
     - 1.6.0-pre.3
     compatible:
+    - 1.5.4
     - 1.6.0-pre.1
     - 1.6.0-pre.3
-    verified: 1.6.0-pre.3
+    verified: 1.5.4
   dependencies:
   - name: com.unity.modules.director
     version: 1.0.0
@@ -3347,10 +3354,12 @@ m_ResolvedPackages:
     - 4.0.3
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.0
     compatible:
     - 4.0.3
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.0
     verified: 4.0.3
   dependencies:
   - name: com.unity.2d.sprite
@@ -3432,10 +3441,12 @@ m_ResolvedPackages:
     - 4.0.1
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.0
     compatible:
     - 4.0.1
     - 5.0.0-pre.1
     - 5.0.0-pre.2
+    - 5.0.0
     verified: 4.0.1
   dependencies: []
   resolvedDependencies: []

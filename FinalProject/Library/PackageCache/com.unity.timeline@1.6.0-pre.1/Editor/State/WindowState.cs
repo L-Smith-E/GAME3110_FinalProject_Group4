@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-
+using UnityEditor.Experimental.SceneManagement;
+using UnityEngine.Experimental.Animations;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -772,7 +772,7 @@ namespace UnityEditor.Timeline
 
         public bool IsEditingAPrefabAsset()
         {
-            var stage = UnityEditor.SceneManagement.PrefabStageUtility.GetCurrentPrefabStage();
+            var stage = PrefabStageUtility.GetCurrentPrefabStage();
             return stage != null && editSequence.director != null && stage.IsPartOfPrefabContents(editSequence.director.gameObject);
         }
 

@@ -32,6 +32,8 @@ namespace UnityEditor
         [SerializeField]
         internal long m_InternalID;
 
+        internal bool m_RegisterInternalID;
+
         GUID m_GUID;
 
         // <summary>The name of the Sprite data.</summary>
@@ -101,19 +103,16 @@ namespace UnityEditor
 
         private void ValidateGUID()
         {
-            if (!m_GUID.Empty())
-                return;
-
-            // We can't use ISerializationCallbackReceiver because we will hit into Script serialization errors
-            m_GUID = new GUID(m_SpriteID);
-            if (!m_GUID.Empty())
-                return;
-
-            if (m_InternalID == 0L)
-                m_InternalID = GenerateInternalID();
-
-            m_GUID = GenerateSpriteID(m_InternalID);
-            m_SpriteID = m_GUID.ToString();
+            if (m_GUID.Empty())
+            {
+                // We can't use ISerializationCallbackReceiver because we will hit into Script serialization errors
+                m_GUID = new GUID(m_SpriteID);
+                if (m_GUID.Empty())
+                {
+                    m_GUID = GUID.Generate();
+                    m_SpriteID = m_GUID.ToString();
+                }
+            }
         }
 
         /// <summary>Helper method to get SpriteRect.spriteID from a SerializedProperty.</summary>
@@ -123,12 +122,6 @@ namespace UnityEditor
         {
             return new GUID(sp.FindPropertyRelative("m_SpriteID").stringValue);
         }
-
-        public static long GenerateInternalID()
-        { return GUID.Generate().GetHashCode(); }
-
-        public static GUID GenerateSpriteID(long internalID)
-        { return GUID.CreateGUIDFromSInt64(internalID); }
 
         internal long internalID
         {

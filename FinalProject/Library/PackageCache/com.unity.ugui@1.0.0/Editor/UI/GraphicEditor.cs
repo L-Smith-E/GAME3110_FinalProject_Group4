@@ -126,7 +126,7 @@ namespace UnityEditor.UI
         {
             EditorGUILayout.PropertyField(m_RaycastTarget);
 
-            m_ShowPadding = EditorGUILayout.Foldout(m_ShowPadding, m_PaddingContent, true);
+            m_ShowPadding = EditorGUILayout.Foldout(m_ShowPadding, m_PaddingContent);
 
             if (m_ShowPadding)
             {
