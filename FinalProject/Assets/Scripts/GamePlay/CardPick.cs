@@ -16,10 +16,9 @@ public class CardPick : MonoBehaviour
     public Text WhoWinText;
 
     //Message
-    public GameObject PlayerFinish;
+    public GameObject PlayerFinish,
+        OppontmentFinish;
     public GameObject DecisionCheck;
-    //public GameObject Message;
-    //public Text Message_Text;
 
     //For card place
     public GameObject[] Card;
@@ -61,11 +60,14 @@ public class CardPick : MonoBehaviour
         else
             DecisionCheck.gameObject.SetActive(false);
 
-        /*
+        if(OtherFinish)
+            OppontmentFinish.gameObject.SetActive(true);
+
         if (Finish && OtherFinish)
         {
             OppontmentPlay();
             //Message.gameObject.SetActive(false);
+            Result();
         }
 
         Finish = false;
@@ -73,19 +75,20 @@ public class CardPick : MonoBehaviour
 
         HealthLose(PlayerHP, OpponentHP);
 
+        //Reset all Health if player play again
         if (Winning == true && ButtonAction.activeSelf)
             ReviveHealth();
-        */
     }
 
     //button Finish
     public void ButFinish()
     {
-        
-        Finish = true;
-        PlayerFinish.gameObject.SetActive(true);
-        Result();
-        
+        if(!Finish)
+        {
+            Finish = true;
+            PlayerFinish.gameObject.SetActive(true);
+        }
+        OtherFinish = true;
 
     }
 
@@ -94,7 +97,6 @@ public class CardPick : MonoBehaviour
     {
         if(!Finish)
         {
-            hold = 0;
             clearCard();
             for (int i = 0; i < PlayerHode.Length; i++)
             {
@@ -112,7 +114,6 @@ public class CardPick : MonoBehaviour
             hold++;
             PlayerShow(1);
         }
-
     }
     public void ButMagic()
     {
@@ -139,15 +140,17 @@ public class CardPick : MonoBehaviour
     //Clear the card
     private void clearCard()
     {
+        //clear table card
         var max = GameObject.FindGameObjectsWithTag("Card");
-
         foreach(var a in max)
         {
             Destroy(a);
         }
 
-
+        hold = 0;
         Finish = false;
+        OtherFinish = false;
+        OppontmentFinish.gameObject.SetActive(false);
         PlayerFinish.gameObject.SetActive(false);
     }
 
@@ -169,19 +172,19 @@ public class CardPick : MonoBehaviour
     private void HealthLose(int P_HP, int O_HP)
     {
         //check PlayerHealth losing
-        if (P_HP == 2)
+        if (P_HP != 3)
             PlayerHealth[2].gameObject.SetActive(false);
-        else if (P_HP == 1)
+        if (P_HP <= 1)
             PlayerHealth[1].gameObject.SetActive(false);
-        else if (P_HP == 0)
+        if (P_HP <= 0)
             PlayerHealth[0].gameObject.SetActive(false);
 
         //check PlayerHealth losing
         if (O_HP == 2)
             OpponentHealth[2].gameObject.SetActive(false);
-        else if (O_HP == 1)
+        if (O_HP <= 1)
             OpponentHealth[1].gameObject.SetActive(false);
-        else if (O_HP == 0)
+        if (O_HP <= 0)
             OpponentHealth[0].gameObject.SetActive(false);
     }
 
@@ -211,7 +214,8 @@ public class CardPick : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             OpponentHode[i] = RandomNumber();
-            O_hold++;
+            //Debug.Log("other:" + OpponentHode[i]);
+            //O_hold++;
             OpponentShow(OpponentHode[i]);
         }
     }
@@ -222,7 +226,10 @@ public class CardPick : MonoBehaviour
         //check result
         for(int i=0;i<3;i++)
         {
-            if(PlayerHode[i] == 1 && OpponentHode[i] == 2||
+            //Debug.Log("player:" + PlayerHode[i]);
+            //Debug.Log("other:" + OpponentHode[i]);
+
+            if (PlayerHode[i] == 1 && OpponentHode[i] == 2||
                 PlayerHode[i] == 2 && OpponentHode[i] == 3||
                 PlayerHode[i] == 3 && OpponentHode[i] == 1)
                 PlayerHP--;
@@ -231,9 +238,11 @@ public class CardPick : MonoBehaviour
                 OpponentHode[i] == 3 && PlayerHode[i] == 1)
                 OpponentHP--;
         }
+        Debug.Log("player:" + PlayerHP);
+        Debug.Log("other:" + OpponentHP);
 
         //anyone lose health
-        if(OpponentHP < 0 || PlayerHP < 0)
+        if (OpponentHP <= 0 || PlayerHP <= 0)
         {
             Winning = true;
             WinUI.gameObject.SetActive(true);
@@ -247,20 +256,20 @@ public class CardPick : MonoBehaviour
             {
                 WhoWinText.text = "Opponent Win!";
                 didPlayerLose = true;
-                global.lost += 1;
+                //global.lost += 1;
             }
             else if (OpponentHP < 0 && didPlayerWin == false)
             {
                 didPlayerWin = true;
                 WhoWinText.text = "Player Win!";
-                global.wins += 1;
-                global.xp += 4;
+                //global.wins += 1;
+                //global.xp += 4;
             }
         }
-        StartCoroutine((string)Timer());
+        StartCoroutine(Timer());
     }
 
-    IEnumerable Timer()
+    IEnumerator Timer()
     {
         yield return new WaitForSeconds(3);
         clearCard();
