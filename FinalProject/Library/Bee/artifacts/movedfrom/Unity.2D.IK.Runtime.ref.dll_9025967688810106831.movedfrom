@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 IKEditorManagerHelper
 UnityEditor
 Experimental
@@ -15,3 +16,22 @@ Solver2DMenuAttribute
 CCD2D
 FABRIKChain2D
 Limb
+=======
+IKEditorManagerHelper
+UnityEditor
+Experimental
+U2D
+IK
+CCDSolver2D
+UnityEngine
+FabrikSolver2D
+IKChain2D
+IKManager2D
+IKUtility
+LimbSolver2D
+Solver2D
+Solver2DMenuAttribute
+CCD2D
+FABRIKChain2D
+Limb
+>>>>>>> Stashed changes
