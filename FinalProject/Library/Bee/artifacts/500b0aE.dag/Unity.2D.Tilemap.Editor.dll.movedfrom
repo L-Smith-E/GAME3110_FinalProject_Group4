@@ -36,6 +36,50 @@ AssetImporterEditorPostProcessAsset
 ScriptedImporterEditor
 ScriptedImporter
 ScriptedImporterAttribute
+<<<<<<< Updated upstream
+=======
+=======
+Sysroot
+UnityEditor
+LinuxStandalone
+ChannelClient
+Unity
+MPE
+ChannelClientScope
+ChannelService
+ChannelScope
+EventDataSerialization
+EventService
+RoleProviderAttribute
+ProcessEvent
+ProcessLevel
+ProcessState
+RoleCapability
+ChannelInfo
+ChannelClientInfo
+ProcessService
+NavMeshBuilder
+NavMeshVisualizationSettings
+CollectImportedDependenciesAttribute
+Experimental
+AssetImporters
+AssetImportContext
+SpriteImportData
+TextureGenerationOutput
+SourceTextureInformation
+TextureGenerationSettings
+TextureGenerator
+FBXMaterialDescriptionPreprocessor
+SketchupMaterialDescriptionPreprocessor
+ThreeDSMaterialDescriptionPreprocessor
+AssetImporterEditor
+AssetImporterEditorPostProcessAsset
+ScriptedImporterEditor
+ScriptedImporter
+ScriptedImporterAttribute
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 NavMeshPathStatus
 UnityEngine
 NavMeshPath
@@ -49,6 +93,25 @@ OffMeshLink
 NavMeshHit
 NavMeshTriangulation
 NavMesh
+<<<<<<< Updated upstream
+=======
+=======
+NavMeshPathStatus
+UnityEngine
+NavMeshPath
+ObstacleAvoidanceType
+NavMeshAgent
+NavMeshObstacleShape
+NavMeshObstacle
+OffMeshLinkType
+OffMeshLinkData
+OffMeshLink
+NavMeshHit
+NavMeshTriangulation
+NavMesh
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 AvatarMaskBodyPart
 UnityEditor
 Animations
@@ -70,6 +133,33 @@ AnimationStreamHandleUtility
 CustomStreamPropertyType
 AnimatorJobExtensions
 MuscleHandle
+<<<<<<< Updated upstream
+=======
+=======
+AvatarMaskBodyPart
+UnityEditor
+Animations
+AvatarMask
+IAnimationJob
+UnityEngine
+Experimental
+IAnimationJobPlayable
+IAnimationWindowPreview
+AnimationHumanStream
+AnimationScriptPlayable
+AnimationStream
+TransformStreamHandle
+PropertyStreamHandle
+TransformSceneHandle
+PropertySceneHandle
+AnimationSceneHandleUtility
+AnimationStreamHandleUtility
+CustomStreamPropertyType
+AnimatorJobExtensions
+MuscleHandle
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 PixelPerfectRendering
 UnityEngine
 Experimental
@@ -104,8 +194,55 @@ IConnectionState
 VertexAttribute
 Rendering
 RenderingThreadingMode
+<<<<<<< Updated upstream
 LocalizationAsset
 UnityEditor
+=======
+=======
+PixelPerfectRendering
+UnityEngine
+Experimental
+U2D
+SpriteBone
+Profiler
+PhotoCaptureFileOutputFormat
+XR
+WSA
+WebCam
+PhotoCapture
+PhotoCaptureFrame
+VideoCapture
+CapturePixelFormat
+WebCamMode
+CameraParameters
+PlayerLoopSystemInternal
+LowLevel
+PlayerLoopSystem
+PlayerLoop
+Initialization
+EarlyUpdate
+FixedUpdate
+PreUpdate
+Update
+PreLateUpdate
+PostLateUpdate
+ConnectionTarget
+Networking
+PlayerConnection
+IConnectionState
+VertexAttribute
+Rendering
+RenderingThreadingMode
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+LocalizationAsset
+UnityEditor
+=======
+LocalizationAsset
+UnityEditor
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 SpriteShapeParameters
 UnityEngine
 Experimental
@@ -116,6 +253,30 @@ SpriteShapeMetaData
 ShapeControlPoint
 AngleRangeInfo
 SpriteShapeUtility
+<<<<<<< Updated upstream
 ProgressBar
 UnityEditor
 UIElements
+=======
+=======
+SpriteShapeParameters
+UnityEngine
+Experimental
+U2D
+SpriteShapeSegment
+SpriteShapeRenderer
+SpriteShapeMetaData
+ShapeControlPoint
+AngleRangeInfo
+SpriteShapeUtility
+>>>>>>> Stashed changes
+<<<<<<< Updated upstream
+ProgressBar
+UnityEditor
+UIElements
+=======
+ProgressBar
+UnityEditor
+UIElements
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
