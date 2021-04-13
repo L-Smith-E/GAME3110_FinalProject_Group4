@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 ICharacterDataProvider
 UnityEditor
 U2D
@@ -7,13 +6,3 @@ Animation
 CharacterData
 CharacterGroup
 CharacterPart
-=======
-ICharacterDataProvider
-UnityEditor
-U2D
-Experimental
-Animation
-CharacterData
-CharacterGroup
-CharacterPart
->>>>>>> Stashed changes
